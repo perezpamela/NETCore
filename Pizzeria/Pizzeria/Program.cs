@@ -1,6 +1,9 @@
 ﻿using System;
 using static System.Console;
 using Datos.Modelos;
+using Servicios;
+using System.Collections.Generic;
+
 namespace Pizzeria
 {
     class Program
@@ -8,8 +11,35 @@ namespace Pizzeria
         static void Main(string[] args)
         {
             Pizza p = new Pizza();
-            p.variedad = "muzzarella";
-            p.precioPorcion = 10.00F;
+            Pizza p2 = new Pizza();
+            p.variedad = "Muzzarella";
+            p.precioPorcion = 50.00F;
+            p2.id = 2;
+            p2.precioPorcion = 120.00F;
+            p.variedad = "Napolitana modificada";
+            PizzaService.save(p2);
+
+            //PizzaService.save(p);
+            //PizzaService.save(p2);
+            //PizzaService.delete(3);
+            //PizzaService.delete(4);
+            //PizzaService.delete(5);
+            //PizzaService.delete(6);
+            //PizzaService.delete(7);
+            //PizzaService.delete(8);
+            //PizzaService.delete(9);
+            //PizzaService.delete(10);
+            //PizzaService.delete(11);
+            //PizzaService.delete(12);
+
+            Pizza pi = PizzaService.get(1);
+            Write(pi.variedad);
+            foreach(Pizza pizza in PizzaService.get())
+            {
+                Write($"La variedad de pizza es: {pizza.variedad} y el precio es: ${pizza.precioPorcion}.");
+            }
+
+
             float precio = p.calcPrecio(Sizes.large, Tipos.piedra);
 
             WriteLine($"El precio a pagar es: {precio}");

@@ -8,10 +8,8 @@ namespace Datos.Modelos
     {
         public int id { get; set; }
         public string clienteNombre { get; set; }
-        public DateTime fechaPedido { get; set; }
-        public DateTime fechaEntrega { get; set; }
-        public int demoraAprox { get; set; }
-        public float montoTotal { get; set; }
+        public DateTime fecha { get; set; }
+        public int demora { get; set; }
         public EstadoPedido estado { get; set; }
 
 

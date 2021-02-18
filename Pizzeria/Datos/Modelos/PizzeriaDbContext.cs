@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Datos.Modelos
 {
-    class PizzeriaDbContext : DbContext
+    public class PizzeriaDbContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optBuilder)
         {
