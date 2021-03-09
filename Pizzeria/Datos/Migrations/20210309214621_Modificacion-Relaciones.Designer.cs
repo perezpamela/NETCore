@@ -4,14 +4,16 @@ using Datos.Modelos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Datos.Migrations
 {
     [DbContext(typeof(PizzeriaDbContext))]
-    partial class PizzeriaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210309214621_Modificacion-Relaciones")]
+    partial class ModificacionRelaciones
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,7 +48,8 @@ namespace Datos.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PedidoId");
+                    b.HasIndex("PedidoId")
+                        .IsUnique();
 
                     b.HasIndex("PizzaId")
                         .IsUnique();
@@ -150,8 +153,8 @@ namespace Datos.Migrations
             modelBuilder.Entity("Datos.Modelos.DetallePedido", b =>
                 {
                     b.HasOne("Datos.Modelos.Pedido", "Pedido")
-                        .WithMany("DetallesPedidos")
-                        .HasForeignKey("PedidoId")
+                        .WithOne("DetallePedido")
+                        .HasForeignKey("Datos.Modelos.DetallePedido", "PedidoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -194,7 +197,7 @@ namespace Datos.Migrations
 
             modelBuilder.Entity("Datos.Modelos.Pedido", b =>
                 {
-                    b.Navigation("DetallesPedidos");
+                    b.Navigation("DetallePedido");
 
                     b.Navigation("Factura");
                 });

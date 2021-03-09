@@ -10,41 +10,42 @@ namespace Servicios
     {
 
 
-    public static IEnumerable<Pizza> get() {
+    public static IEnumerable<Pizza> Get() {
 
             using(var db = new PizzeriaDbContext())
             {
-               return  db.Pizza;
+               return  db.Pizza.ToList();
             }
             
         }
                              
-    public static Pizza get(int id) {
+    public static Pizza Get(int id) {
             using (var db = new PizzeriaDbContext())
             {
-                return db.Pizza.Find(id);
+                //return db.Pizza.Find(id);
+                return db.Pizza.Include(pizza => pizza.Ingredientes).Where(pizza => pizza.Id == id).FirstOrDefault();
             }
         }
 
-    public static IEnumerable<Pizza> get(string nombre) { 
+    public static IEnumerable<Pizza> Get(string nombre) { 
             using(var db = new PizzeriaDbContext())
             {
                 IEnumerable<Pizza> pizzas = db.Pizza;
                 if (!string.IsNullOrEmpty(nombre))
                 {
-                    pizzas = pizzas.Where(pizza => pizza.variedad.Contains(nombre.ToUpper()));
+                    pizzas = pizzas.Where(pizza => pizza.Variedad.Contains(nombre.ToUpper()));
                 }
-                return pizzas;
+                return pizzas.ToList();
             }
                 }
 
-    public static void save(Pizza pizza)
+    public static void Save(Pizza pizza)
         {
             using(var db = new PizzeriaDbContext())
             {
                 try
                 {
-                    if(pizza.id != 0)
+                    if(pizza.Id != 0)
                     {
                         db.Entry(pizza).State = EntityState.Modified;
                     }
@@ -57,7 +58,7 @@ namespace Servicios
                 }
                 catch (Exception e)
                 {
-                    if (e.ToString().Contains("Pizza_variedad"))
+                    if (e.ToString().Contains("Pizza_Variedad"))
                     {
                         throw new ApplicationException("Ya existe otra variedad de pizza con ese nombre.");   
                     }
@@ -69,10 +70,10 @@ namespace Servicios
             }
         }
 
-    public static bool delete(int id) {
+    public static bool Delete(int id) {
         using(var db = new PizzeriaDbContext())
             {
-                Pizza pizza = db.Pizza.Where(p => p.id == id).FirstOrDefault<Pizza>();
+                Pizza pizza = db.Pizza.Where(p => p.Id == id).FirstOrDefault<Pizza>();
                 if (pizza != null)
                 {
                     db.Entry(pizza).State = EntityState.Deleted;
@@ -82,8 +83,6 @@ namespace Servicios
                 {
                     return false;
                 }
-                
-
             }
         
         }

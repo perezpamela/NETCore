@@ -4,14 +4,16 @@ using Datos.Modelos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Datos.Migrations
 {
     [DbContext(typeof(PizzeriaDbContext))]
-    partial class PizzeriaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210309213404_Modificacion-Modelos")]
+    partial class ModificacionModelos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,6 +29,9 @@ namespace Datos.Migrations
                         .UseIdentityColumn();
 
                     b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FacturaId")
                         .HasColumnType("int");
 
                     b.Property<int>("PedidoId")
@@ -46,7 +51,10 @@ namespace Datos.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PedidoId");
+                    b.HasIndex("FacturaId");
+
+                    b.HasIndex("PedidoId")
+                        .IsUnique();
 
                     b.HasIndex("PizzaId")
                         .IsUnique();
@@ -69,8 +77,7 @@ namespace Datos.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PedidoId")
-                        .IsUnique();
+                    b.HasIndex("PedidoId");
 
                     b.ToTable("Factura");
                 });
@@ -149,9 +156,13 @@ namespace Datos.Migrations
 
             modelBuilder.Entity("Datos.Modelos.DetallePedido", b =>
                 {
+                    b.HasOne("Datos.Modelos.Factura", "Factura")
+                        .WithMany()
+                        .HasForeignKey("FacturaId");
+
                     b.HasOne("Datos.Modelos.Pedido", "Pedido")
-                        .WithMany("DetallesPedidos")
-                        .HasForeignKey("PedidoId")
+                        .WithOne("DetallePedido")
+                        .HasForeignKey("Datos.Modelos.DetallePedido", "PedidoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -161,6 +172,8 @@ namespace Datos.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Factura");
+
                     b.Navigation("Pedido");
 
                     b.Navigation("Pizza");
@@ -169,8 +182,8 @@ namespace Datos.Migrations
             modelBuilder.Entity("Datos.Modelos.Factura", b =>
                 {
                     b.HasOne("Datos.Modelos.Pedido", "Pedido")
-                        .WithOne("Factura")
-                        .HasForeignKey("Datos.Modelos.Factura", "PedidoId")
+                        .WithMany()
+                        .HasForeignKey("PedidoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -194,9 +207,7 @@ namespace Datos.Migrations
 
             modelBuilder.Entity("Datos.Modelos.Pedido", b =>
                 {
-                    b.Navigation("DetallesPedidos");
-
-                    b.Navigation("Factura");
+                    b.Navigation("DetallePedido");
                 });
 
             modelBuilder.Entity("Datos.Modelos.Pizza", b =>

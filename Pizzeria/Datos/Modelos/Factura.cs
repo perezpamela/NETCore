@@ -6,8 +6,11 @@ namespace Datos.Modelos
 {
     public class Factura
     {
-        public int id { get; set; }
-        public Pedido pedido { get; set; }
-        public string formaDePago { get; set; }
+        public int Id { get; set; }
+        public formaDePago FormaDePago { get; set; }
+
+        public int PedidoId { get; set; }
+        public Pedido Pedido { get; set; }
+        
     }
 }

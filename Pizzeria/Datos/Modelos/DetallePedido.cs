@@ -6,14 +6,24 @@ namespace Datos.Modelos
 {
     public class DetallePedido
     {
-        public int id { get; set; }
-        public Pedido pedido { get; set; }
-        public Pizza pizza { get; set; }
-        public int cantidadad { get; set; }
-        public Tipos tipo { get; set; }
-        public Sizes size { get; set; }
-        public float subTotal { get; set; }
+        public int Id { get; set; }
+        public int Cantidad { get; set; }
+        public Tipos Tipo { get; set; }
+        public Sizes Size { get; set; }
+        public float SubTotal { get; set; }
 
+        public int PedidoId { get; set; } 
+        public Pedido Pedido { get; set; }
+
+        public int PizzaId { get; set; }
+        public Pizza Pizza { get; set; }
+        
+        
+
+        public float calcSubTotal(float precio)
+        {  
+            return  precio * this.Cantidad;
+        }
 
     }
 }

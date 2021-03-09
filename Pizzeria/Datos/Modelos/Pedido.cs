@@ -6,12 +6,15 @@ namespace Datos.Modelos
 {
     public class Pedido
     {
-        public int id { get; set; }
-        public string clienteNombre { get; set; }
-        public DateTime fecha { get; set; }
-        public int demora { get; set; }
-        public EstadoPedido estado { get; set; }
+        public int Id { get; set; }
+        public string ClienteNombre { get; set; }
+        public DateTime Fecha { get; set; }
+        public int Demora { get; set; }
+        public EstadoPedido Estado { get; set; }
+        public List<DetallePedido> DetallesPedidos { get; set; }
 
+        //public DetallePedido DetallePedido { get; set; }
+        public Factura Factura { get; set; }
 
     }
 }

@@ -12,12 +12,12 @@ namespace Pizzeria
         {
             Pizza p = new Pizza();
             Pizza p2 = new Pizza();
-            p.variedad = "Muzzarella";
-            p.precioPorcion = 50.00F;
-            p2.id = 2;
-            p2.precioPorcion = 120.00F;
-            p.variedad = "Napolitana modificada";
-            PizzaService.save(p2);
+            p.Variedad = "Muzzarella";
+            p.Precio = 50.00F;
+            p2.Id = 2;
+            p2.Precio = 120.00F;
+            p.Variedad = "Napolitana modificada";
+            PizzaService.Save(p2);
 
             //PizzaService.save(p);
             //PizzaService.save(p2);
@@ -32,11 +32,11 @@ namespace Pizzeria
             //PizzaService.delete(11);
             //PizzaService.delete(12);
 
-            Pizza pi = PizzaService.get(1);
-            Write(pi.variedad);
-            foreach(Pizza pizza in PizzaService.get())
+            Pizza pi = PizzaService.Get(1);
+            Write(pi.Variedad);
+            foreach(Pizza pizza in PizzaService.Get())
             {
-                Write($"La variedad de pizza es: {pizza.variedad} y el precio es: ${pizza.precioPorcion}.");
+                Write($"La variedad de pizza es: {pizza.Variedad} y el precio es: ${pizza.Precio}.");
             }
 
 

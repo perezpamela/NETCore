@@ -6,8 +6,8 @@ namespace Datos.Modelos
 {
     public class Ingrediente
     {
-        public int id { get; set; }
-        public string nombre { get; set; }
-        public List<Pizza> pizzas { get; set; }
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public List<Pizza> Pizzas { get; set; }
     }
 }
