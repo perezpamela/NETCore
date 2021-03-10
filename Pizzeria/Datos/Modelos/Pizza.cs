@@ -7,6 +7,13 @@ namespace Datos.Modelos
 
     public class Pizza
     {
+        public Pizza() { }
+        public Pizza(string variedad, float precio, List<Ingrediente> ingredientes = null)
+        {
+            this.Variedad = variedad;
+            this.Precio = precio;
+            this.Ingredientes = ingredientes;
+        }
         public int Id { get; set; }
         public string Variedad { get; set; }
         public float Precio { get; set; }

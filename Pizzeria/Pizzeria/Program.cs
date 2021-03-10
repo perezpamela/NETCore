@@ -4,45 +4,98 @@ using Datos.Modelos;
 using Servicios;
 using System.Collections.Generic;
 
+//Datos curiosos: le puse a la propiedad nombre del modelo Ingredientes Unique e igual recibe nombres duplicados. (?
+
 namespace Pizzeria
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Pizza p = new Pizza();
-            Pizza p2 = new Pizza();
-            p.Variedad = "Muzzarella";
-            p.Precio = 50.00F;
-            p2.Id = 2;
-            p2.Precio = 120.00F;
-            p.Variedad = "Napolitana modificada";
-            PizzaService.Save(p2);
 
-            //PizzaService.save(p);
-            //PizzaService.save(p2);
-            //PizzaService.delete(3);
-            //PizzaService.delete(4);
-            //PizzaService.delete(5);
-            //PizzaService.delete(6);
-            //PizzaService.delete(7);
-            //PizzaService.delete(8);
-            //PizzaService.delete(9);
-            //PizzaService.delete(10);
-            //PizzaService.delete(11);
-            //PizzaService.delete(12);
+            //Creo ingredientes 
+            Ingrediente palmitos = new Ingrediente("Palmitos");
+            Ingrediente queso1 = new Ingrediente("Queso Muzzarella");
+            Ingrediente queso2 = new Ingrediente("Queso Roquefort");
+            Ingrediente queso3 = new Ingrediente("Queso Parmesano");
+            Ingrediente queso4 = new Ingrediente("Queso Fontina");
+            Ingrediente aceituna1 = new Ingrediente("Aceitunas Verdes");
+            Ingrediente aceituna2 = new Ingrediente("Aceitunas Negras");
 
-            Pizza pi = PizzaService.Get(1);
-            Write(pi.Variedad);
-            foreach(Pizza pizza in PizzaService.Get())
-            {
-                Write($"La variedad de pizza es: {pizza.Variedad} y el precio es: ${pizza.Precio}.");
-            }
+            // Creo pizzas
+            Pizza muzzarella = new Pizza("Muzzarella Común", 170.00F, null);
+            Pizza cuatroQuesos = new Pizza("Cuatro Quesos", 200.00F, null);
+            Pizza conPalmitos = new Pizza("Muzzarella con Palmitos", 280.00F, null);
 
 
-            float precio = p.calcPrecio(Sizes.large, Tipos.piedra);
+            //Esto ya está en la bd -->
 
-            WriteLine($"El precio a pagar es: {precio}");
+            /*
+              
+
+            //Los ingreso a la bd
+            IngredienteService.Save(palmitos);
+            IngredienteService.Save(queso1);
+            IngredienteService.Save(queso2);
+            IngredienteService.Save(queso3);
+            IngredienteService.Save(queso4);
+            IngredienteService.Save(aceituna1);
+            IngredienteService.Save(aceituna2);
+
+            
+
+            //Las ingreso a la bd
+            PizzaService.Save(muzzarella);
+            PizzaService.Save(cuatroQuesos);
+            PizzaService.Save(conPalmitos);
+
+                         */
+            //Modifico Pizzas
+            palmitos = IngredienteService.Get(14);
+            queso1 = IngredienteService.Get(15);
+            queso2 = IngredienteService.Get(16);
+            queso3 = IngredienteService.Get(17);
+            queso4 = IngredienteService.Get(18);
+            aceituna1 = IngredienteService.Get(19);
+            aceituna2 = IngredienteService.Get(20);
+
+
+
+            List<Ingrediente> listaMuzzarella = new List<Ingrediente>();
+            listaMuzzarella.Add(queso1);
+            listaMuzzarella.Add(aceituna1);
+
+            List<Ingrediente> listaCuatroQuesos = new List<Ingrediente>();
+            listaCuatroQuesos.Add(queso1);
+            listaCuatroQuesos.Add(queso2);
+            listaCuatroQuesos.Add(queso3);
+            listaCuatroQuesos.Add(queso4);
+            listaCuatroQuesos.Add(aceituna2);
+
+            List<Ingrediente> listaPalmitos = new List<Ingrediente>();
+            listaPalmitos.Add(queso1);
+            listaPalmitos.Add(palmitos);
+            listaPalmitos.Add(aceituna1);
+
+
+            muzzarella.Ingredientes = listaMuzzarella;
+            cuatroQuesos.Ingredientes = listaCuatroQuesos;
+            conPalmitos.Ingredientes = listaPalmitos;
+
+            muzzarella.Id = 1;
+            cuatroQuesos.Id = 2;
+            conPalmitos.Id = 3;
+
+            //Ingreso Modificaciones a la bd
+            PizzaService.Save(muzzarella);
+            PizzaService.Save(cuatroQuesos);
+            PizzaService.Save(conPalmitos);
+             
+
+
+
+
+            WriteLine($"Los datos de la pizza 1 son: " + PizzaService.Get(1).Variedad + PizzaService.Get(1).Precio);
 
             //Numeros impares de 0 a 100
             for (int i = 0; i < 101; i++)
